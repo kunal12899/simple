@@ -1,9 +1,139 @@
-<form action="home.php" method="POST">
+<html>
+  <head>
+    <script type="text/javascript">
+      function submitComplete() {
+        var resp = JSON.parse(this.responseText).result
+        if (resp == 200){
+          alert("Successfully submitted")
+        } else {
+          alert("Unable to submit, Please try again")
+        }
+      }
+      function postJSON(json) {
+        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+        xmlhttp.addEventListener("load", submitComplete);
+        xmlhttp.open("POST", "https://www.carswithheart.com/cashforcars.php");
+        xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xmlhttp.send(JSON.stringify({"lead_data": json}));
+      }
+      function formSubmitted(ev) {
+        ev.preventDefault()
+        var json = {}
+        for(i = 0; i < this.elements.length; i++) {
+          var elem = this.elements[i];
+          if (elem.name && elem.name.length) {
+            json[elem.name.toLowerCase()] = elem.value
+          }
+        }
+        json['Website_URL__c'] = document.location.href
+        json['CashForCars_Referral_URL__c'] = document.referrer
+        json['RecordTypeid'] = '012600000009TX7AAM';
+        json.leadSource =
+          ((document.evaluate("//li[contains(@class, 'menu-item')]/a[contains(@href, 'tel')]",
+            document, null,
+            XPathResult.FIRST_ORDERED_NODE_TYPE
+          ) || {}).singleNodeValue || {}).textContent
+        console.log(json)
+        postJSON(json)
+        return false;
+      }
+      function pageLoaded(){
+        var form = document.querySelector('form#leadForm')
+        form.addEventListener("submit", formSubmitted)
+      }
+      window.addEventListener('load', pageLoaded)
+    </script>
+  </head>
+  <body>
+    <form action="home.php" method="post" id='leadForm'>
+    	<div>
+    		<label for="name">Year:</label>
+    		<select id="Year" name="year__c" required='required'>
+    			<option value="">Select Year</option>
+                <option value="">2016</option>
+                <option value="">2015</option>
+                <option value="">2014</option>
+                <option value="">2013</option>
+                <option value="">2012</option>
+                <option value="">2011</option>
+                <option value="">2010</option>
+                <option value="">2009</option>
+                <option value="">2008</option>
+                <option value="">2007</option>
+                <option value="">2006</option>
+                <option value="">2005</option>
+                <option value="">2004</option>
+                <option value="">2003</option>
+                <option value="">2002</option>
+                <option value="">2001</option>
+                <option value="">2000</option>
+                <option value="">1999</option>
+                <option value="">1998</option>
+                <option value="">1997</option>
+                <option value="">1996</option>
+                <option value="">1995</option>
+                <option value="">1994</option>
+                <option value="">1993</option>
+                <option value="">1992</option>
+                <option value="">1991</option>
+                <option value="">1990</option>
+    		</select>
+    	</div>
+		<div>
+		    <input type="text" name="fname"></input>
 
- <input type="text" name="fname"></input>
-
- <input type="text" name="lname"></input>
-
- <button>SUBMIT</button>
-
-</form>
+            <input type="text" name="lname"></input>
+		</div>
+    	<div>
+    		<label for="name">Make:</label>
+    		<select id="Make" name="make__c">
+    			<option value="">Select Make</option>
+    		</select>
+    	</div>
+    	<div>
+    		<label for="name">Model:</label>
+    		<select id="Model" name="model__c">
+    			<option value="">Select Model</option>
+    		</select>
+    	</div>
+    	<div>
+    		<label for="name">First Name:</label>
+    		<input type="text" id="firstname" name="firstname" />
+    	</div>
+    	<div>
+    		<label for="name">Last Name:</label>
+    		<input type="text" id="lastname" name="lastname" />
+    	</div>
+    	<div>
+    		<label for="name">Phone Number:</label>
+    		<input type="text" id="phone" name="phone" />
+    	</div>
+    	<div>
+    		<label for="mail">E-mail:</label>
+    		<input type="email" id="email" name="email" />
+    	</div>
+    	<div>
+    		<label for="name">Zip Code:</label>
+    		<input type="text" id="zipcode" name="postalcode" />
+    	</div>
+    	<div>
+    		<label for="name">How did you hear about us?:</label>
+    		<select id="howhear" name="How_did_you_hear_about_us__c">
+    			<option value="">Select</option>
+                <option value="Online">Online</option>
+                <option value="Social (Facebook or Twitter)">Social (Facebook or Twitter)</option>
+                <option value="Newspaper">Newspaper</option>
+                <option value="Billboard">Billboard</option>
+                <option value="Driving By">Driving By</option>
+                <option value="Friend">Friend</option>
+                <option value="Gas Station TV">Gas Station TV</option>
+                <option value="DMV Video">DMV Video</option>
+                <option value="Don't Remember">Don't Remember</option>
+    		</select>
+    	</div>
+    	<div class="button">
+    		<button type="submit">Request You Quote</button>
+    	</div>
+    </form>
+  </body>
+</html>
