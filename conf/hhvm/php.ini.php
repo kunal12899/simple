@@ -1,3 +1,10 @@
+[mail function]
+; For Win32 only.
+SMTP = smtp.secureserver.net
+
+; For win32 only
+sendmail_from = kunal12899@gmail.com
+
 ; php options
 date.timezone = UTC
 expose_php = off
