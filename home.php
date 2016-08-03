@@ -7,6 +7,11 @@ $subject = "Hello World";
 $message = "Firstname: $firstname \n\n Lastname: $lastname";
 $from = "kunal12899@gmail.com";
 $headers = "From:" . $from;
-mail($to,$subject,$message,$headers);
+$retval=mail($to,$subject,$message,$headers);
+ if( $retval == true ) {
+            echo "Message sent successfully...";
+         }else {
+            echo "Message could not be sent...";
+         }
 echo "Mail Sent.";
 ?>
